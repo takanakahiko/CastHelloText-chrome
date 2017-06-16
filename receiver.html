@@ -19,27 +19,53 @@ limitations under the License.
     <style type="text/css">
       body {
         overflow:hidden;
+        background-color:#000000;
       }
-      div{
+      #contentWrapper {
         height:720PX;
         width:1280PX;
-        text-align:center;
         border:0px solid silver;
-        display: table-cell;
-        vertical-align:middle;
-        color:#FFFFFF;
-        background-color:#000000;
-        font-weight:bold;
-        font-family:Verdana, Geneva, sans-serif;
-        font-size:40px;
+        background-image:url("img/back.jpg");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      #event{
+        position: absolute;
+        background-color: black;
+        line-height: 23px;
+        top: 64px;
+        left: 237px;
+        color: yellow;
+        transform: scale(1,2.5);
+        font-size: 24px;
+        font-family: Georgia, 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+        font-weight:bolder;
+      }
+      #clockWrapper{
+        position: absolute;
+        top: 260px;
+        left: 280px;
+        color: yellow;
+        transform: scale(1,3.5);
+        font-size: 70px;
       }
     </style>
+    <link rel="stylesheet" type="text/css" href="./dseg.css" />
     <title>Cast Hello Text</title>
   </head>
   <body>
-  <div id="message">Talk to me</div>
-    <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
-    <script type="text/javascript">
+  <div id="contentWrapper">
+    <div id="event">審査登録</div>
+    <div id="clockWrapper" class="D7MBI">
+      <span id="DSEG_D" class="digit">88</span>:
+      <span id="DSEG_H" class="digit">88</span>:
+      <span id="DSEG_M" class="digit">88</span>:
+      <span id="DSEG_S" class="digit">88</span>
+    </div>
+  </div>
+    <!--<script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+    --><script type="text/javascript">/*
       window.onload = function() {
         cast.receiver.logger.setLevelValue(0);
         window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
@@ -97,7 +123,20 @@ limitations under the License.
         //document.getElementById('message').innerText = text;
         document.getElementById('message').innerHTML = text;
         window.castReceiverManager.setApplicationState(text);
-      };
+      };*/
+
+      var eventDate = new Date("2017/06/22 00:00:00");
+
+      function update(){
+        var nowDate = new Date();
+        var less = new Date(eventDate.getTime() - nowDate.getTime() + (nowDate.getTimezoneOffset()*60*1000));
+        document.getElementById('DSEG_D').innerHTML = ("0"+(less.getDate()-1)).slice(-2);
+        document.getElementById('DSEG_H').innerHTML = ("0"+less.getHours()).slice(-2);
+        document.getElementById('DSEG_M').innerHTML = ("0"+less.getMinutes()).slice(-2);
+        document.getElementById('DSEG_S').innerHTML = ("0"+less.getSeconds()).slice(-2);
+      }
+
+      setInterval(update,1000);
     </script>
   </body>
 </html>
