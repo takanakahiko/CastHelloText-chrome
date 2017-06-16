@@ -39,16 +39,27 @@ limitations under the License.
         color: yellow;
         transform: scale(1,2.5);
         font-size: 24px;
-        font-family: Georgia, 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+        font-family: "ヒラギノ明朝 ProN W6", "HiraMinProN-W6", "HG明朝E", "ＭＳ Ｐ明朝", "MS PMincho", "MS 明朝", serif;
         font-weight:bolder;
       }
       #clockWrapper{
         position: absolute;
-        top: 260px;
+        top: 200px;
         left: 280px;
         color: yellow;
-        transform: scale(1,3.5);
-        font-size: 70px;
+        transform: scale(1,1.5);
+        font-size: 80px;
+      }
+      #clockWrapper p{
+        margin: 0;
+      }
+      #DSEG_MS{
+        font-size: 35px;
+      }
+      #DSEG_ENG{
+        font-family: "ヒラギノ明朝 ProN W6", "HiraMinProN-W6", "HG明朝E", "ＭＳ Ｐ明朝", "MS PMincho", "MS 明朝", serif;
+        font-size: 50px;
+        font-weight: bolder;
       }
     </style>
     <link rel="stylesheet" type="text/css" href="./dseg.css" />
@@ -58,10 +69,16 @@ limitations under the License.
   <div id="contentWrapper">
     <div id="event">審査登録</div>
     <div id="clockWrapper" class="D7MBI">
-      <span id="DSEG_D" class="digit">88</span>:
-      <span id="DSEG_H" class="digit">88</span>:
-      <span id="DSEG_M" class="digit">88</span>:
-      <span id="DSEG_S" class="digit">88</span>
+      <p id="dayWrapper">
+        <span id="DSEG_D" class="digit">88</span>
+        <span id="DSEG_ENG" class="D14MI"> 日</span>
+      </p>
+      <p id="timeWrapper">
+        <span id="DSEG_H" class="digit">88</span>:
+        <span id="DSEG_M" class="digit">88</span>:
+        <span id="DSEG_S" class="digit">88</span>
+        <span id="DSEG_MS" class="digit">88</span>
+      </p>
     </div>
   </div>
     <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
@@ -124,7 +141,7 @@ limitations under the License.
         window.castReceiverManager.setApplicationState(text);
       };
 
-      var eventDate = new Date("2017/06/22 00:00:00");
+      var eventDate = new Date("2017/06/22 17:00:00");
 
       function update(){
         var nowDate = new Date();
@@ -133,9 +150,10 @@ limitations under the License.
         document.getElementById('DSEG_H').innerHTML = ("0"+less.getHours()).slice(-2);
         document.getElementById('DSEG_M').innerHTML = ("0"+less.getMinutes()).slice(-2);
         document.getElementById('DSEG_S').innerHTML = ("0"+less.getSeconds()).slice(-2);
+        document.getElementById('DSEG_MS').innerHTML = ("0"+Math.ceil(less.getMilliseconds()/10)).slice(-2);
       }
 
-      setInterval(update,1000);
+      setInterval(update,10);
     </script>
   </body>
 </html>
