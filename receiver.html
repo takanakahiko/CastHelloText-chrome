@@ -43,15 +43,47 @@ limitations under the License.
         font-weight:bolder;
       }
       #clockWrapper{
-        position: absolute;
-        top: 200px;
-        left: 280px;
         color: yellow;
+      }
+      #dayWrapper{
+        position: absolute;
+        top: 130px;
+        left: 290px;
         transform: scale(1,1.5);
+        font-size: 50px;
+      }
+      #timeWrapper{
+        position: absolute;
+        top: 280px;
+        left: 280px;
+        transform: scale(1,2.7);
         font-size: 80px;
       }
-      #clockWrapper p{
-        margin: 0;
+      #parts1{
+        position: absolute;
+        top: 316px;
+        left: 1034px;
+        width: 70px;
+        height: 113px;
+        background-color: black;
+      }
+      #parts1>div {
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+          -45deg,
+          rgba(0, 0, 0, 0) 25%,
+          #ff0000 25%, #ff0000 51%,
+          rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 76%,
+          #ff0000 75%, #ff0000
+        );
+        background-size: 26px 26px;
+        animation: scrol 2s linear 0s infinite normal none running;
+      }
+      @keyframes scrol {
+        0%  {background-position: 0px  0px}
+        50% {background-position:13px 13px}
+        100%{background-position:26px 26px}
       }
       #DSEG_MS{
         font-size: 35px;
@@ -69,16 +101,19 @@ limitations under the License.
   <div id="contentWrapper">
     <div id="event">審査登録</div>
     <div id="clockWrapper" class="D7MBI">
-      <p id="dayWrapper">
+      <div id="dayWrapper">
         <span id="DSEG_D" class="digit">88</span>
         <span id="DSEG_ENG" class="D14MI"> 日</span>
-      </p>
-      <p id="timeWrapper">
+      </div>
+      <div id="timeWrapper">
         <span id="DSEG_H" class="digit">88</span>:
         <span id="DSEG_M" class="digit">88</span>:
         <span id="DSEG_S" class="digit">88</span>
         <span id="DSEG_MS" class="digit">88</span>
-      </p>
+      </div>
+    </div>
+    <div id="parts1">
+      <div></div>
     </div>
   </div>
     <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
