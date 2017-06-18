@@ -108,6 +108,45 @@ body {
   font-style: normal;
   font-weight: 900;
 }
+#parts3{
+  position: absolute;
+  top: 78px;
+  left: 970px;
+  height:130px;
+  width: 130px;
+  border: 5px yellow solid;
+}
+#weather{
+  font-family: "DWEATHER";
+  display: inline-block;
+  text-align: center;
+  color: yellow;
+  font-size:120px;
+  height:130px;
+  width: 130px;
+  animation: Flash1 1s infinite;
+}
+@keyframes Flash1{
+  50%{
+    opacity: 0;
+  }
+}
+#parts4{
+  position: absolute;
+  top: 90px;
+  left: 815px;
+  transform: scale(0.7,1);
+}
+#parts4 p{
+  color: yellow;
+  font-size:60px;
+  font-family: source-han-serif-japanese, serif;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 60px;
+  margin: 0;
+  padding: 0;
+}
   </style>
   <link rel="stylesheet" type="text/css" href="./dseg.css" />
   <title>Cast Hello Text</title>
@@ -131,10 +170,18 @@ body {
       <div></div>
     </div>
     <div id="parts2">
-      <MARQUEE>【速報】JR渋谷駅前 20mの鉄骨倒れる / 明日 八王子 晴れ時々曇り</MARQUEE>
+      <MARQUEE id="newsText"></MARQUEE>
+    </div>
+    <div id="parts3">
+      <span id="weather"></span>
+    </div>
+    <div id="parts4">
+      <p>日本、</p>
+      <p>東京都</p>
     </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js"></script>
   <!--
   <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
   -->
@@ -213,19 +260,34 @@ body {
 
 
     function getFeed(){
-      var FEED_URL = "https://news.google.com/news?hl=ja&ned=us&ie=UTF-8&oe=UTF-8&output=rss&topic=s";
-      $.get(FEED_URL, function (data) {
-          $(data).find("item").each(function () { // or "item"
-              var el = $(this);
-              console.log(el.find("link").text());
-              console.log(el.find("title").text());
-          });
+      $.ajax({
+        type: 'GET',
+        url: 'https://script.google.com/macros/s/AKfycbza_YvYwT8-2NaD_4QLPWAXo25sdOFpLUdqafAi-3yMBvoM3S4/exec',
+        dataType: 'jsonp',
+        success: function(json){
+          var resp = json.response;
+          var news = [];
+          for(var i=0; i < resp.length; i++){
+            news.push(resp[i][0]);
+          }
+          $('#newsText').text(news.join(" / "));
+        }
       });
     }
 
     window.onload = function(){
       setInterval(update,10);
       getFeed();
+      $(document).ready(function() {
+        $.simpleWeather({
+          location: 'Tokyo, JP',
+          unit: 'c',
+          success: function(weather) {
+            var weatherTable = [4,4,4,7,6,5,5,5,5,3,5,3,3,5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,2,2,1,1,9,9,5,1,7,7,7,4,5,5,5,9,6,5,7];
+            $("#weather").text(weatherTable[weather.code]);
+          }
+        });
+      });
     }
 
     </script>
